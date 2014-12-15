@@ -1,0 +1,49 @@
+<style>
+  #facilities_table_header {
+      //position:fixed;
+  }
+  #facilities_table th{
+      //position: fixed;
+  }
+</style>
+
+<div id="facilities_table_header">
+  <h1>Facilities</h1>
+  <div class="form-group">
+    <%= link_to 'New Facility', new_facility_path, :class => 'btn btn-default' %>
+  </div>
+</div>
+
+<table id="facilities_table" class="table">
+  <thead>
+    <tr>
+      <th><%= link_to 'Name', "#{facilities_path}?order_by=name" %></th>
+      <th><%= link_to 'City', "#{facilities_path}?order_by=city" %></th>
+      <th><%= link_to 'State', "#{facilities_path}?order_by=state" %></th>
+
+      <th><%= link_to 'Contact', "#{facilities_path}?order_by=contact" %></th>
+      <th><%= link_to 'Company', "#{facilities_path}?order_by=company" %></th>
+      <th><%= link_to 'Setting', "#{facilities_path}?order_by=setting" %></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @facilities.each do |facility| %>
+      <tr>
+        <td><%= link_to facility.name, edit_facility_path(facility) %></td>
+        <td><%= facility.address ? facility.address.city : 'unknown' %></td>
+        <td><%= facility.address ? facility.address.state : 'unknown' %></td>
+        <td><%= facility.contact_id ? link_to(facility.contact.name, facility.contact) : 'unknown' %></td>
+        <td><%= facility.company_id ? link_to(facility.company.name, facility.company) : 'unknown' %></td>
+        <td><%= CLINICAL_SETTINGS[facility.setting.to_sym][:name] %></td>
+        <td><%= link_to 'Destroy', facility, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'text-danger' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Facility', new_facility_path %>
+

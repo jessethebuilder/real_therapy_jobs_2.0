@@ -1,0 +1,25 @@
+<script>
+    <% function_name = "#{select_that_triggers}_selected".camelize(:lower) %>
+    function <%= function_name %>(){
+        var id = $('#<%= select_that_triggers %>').val();
+        var options = document.getElementById('<%= select_that_changes %>').options;
+        options.length = <%= include_blank ? 1 : 0 %>
+
+        var arr = [];
+        <% for i in collection %>
+        arr.push(['<%= i.send(select_on_method) %>', '<%= i.send(name_method) %>', '<%= i.send(id_method) %>']);
+        <% end %>
+
+        for (j = 0; j < arr.length; j++) {
+            if (arr[j][0] == id || id.length == 0) {
+                options[options.length] = new Option(arr[j][1], arr[j][2]);
+            }
+        }
+    }
+
+    $(document).ready(function(){
+        <%= "#{function_name}()" %>;
+       $('#<%= select_that_triggers %>').change(<%= function_name %>);
+
+    })
+</script>

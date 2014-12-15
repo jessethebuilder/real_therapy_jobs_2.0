@@ -1,0 +1,1 @@
+<%= f.select :company_id, for_select(@contacts || Contact.all.order(:name), :name, :id), {}, :class => 'form-control' %>

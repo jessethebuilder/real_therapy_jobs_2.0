@@ -1,0 +1,14 @@
+/*$('#express_modal').modal('hide');
+<% if @company.errors.count > 0 %>
+  $('#express_modal').on('hidden.bs.modal', function(e){
+      $('body').append('<%= j express_modal('Create New Company', nil, true){ render :partial => 'companies/form', :locals => {:remote => true} } %>');
+      $('#express_modal').modal('show');
+  });
+<% else %>
+  var opts = document.getElementById('facility_company_id').options;
+  opts[opts.length] = new Option('<%= @company.name %>', '<%= @company.id %>');
+  $('#facility_company_id').val('<%= @company.id %>');
+<% end %>
+*/
+
+<%= update_select_from_modal @company, 'facility_company_id' %>

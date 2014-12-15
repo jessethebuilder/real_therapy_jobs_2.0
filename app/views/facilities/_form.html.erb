@@ -1,0 +1,43 @@
+
+<%= form_for(@facility) do |f| %>
+   <%= error_explanation @facility %>
+
+  <div class="col-md-4">
+    <div class="form-group">
+      <%= f.label :name, :class => 'control-label' %>
+      <%= f.text_field :name, :class => 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.label :company_id, :class => 'control-label' %>
+      <span class="pull-right"><%= link_to 'New Company', new_company_path, :remote => true %></span>
+      <%= f.select :company_id, for_select(Company.all.order(:name), :name, :id), {:include_blank => true}, :class => 'form-control updateable' %>
+      <%#= f.select :contact_id, [], {}, :class => 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.label :contact_id, :class => 'control-label' %>
+      <span class="pull-right"><%= link_to 'New Contact', new_contact_path, :remote => true %></span>
+      <%= f.select :contact_id, [], {}, :class => 'form-control' %>
+      <%#= render :partial => 'facilities/parts/contact_select', :locals => {:f => f} %>
+    </div>
+    <div class="form-group">
+      <%= f.label :setting, :class => 'control-label' %>
+      <%= f.select :setting, CLINICAL_SETTINGS.map{ |k, v| [v[:name], k]}, {}, :class => 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.submit :class => 'btn btn-primary' %>
+    </div>
+    <% unless @facility.new_record? %>
+        <div class="form-group">
+          <%= link_to 'Destroy', @facility, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger' %>
+        </div>
+    <% end %>
+
+
+
+    <%= link_to 'All Facilities', facilities_path %>
+
+  </div><!-- col -->
+
+    <%= dynamic_select(Contact.all.order(:name), :company_id, 'facility_company_id', 'facility_contact_id') %>
+    <%#= dynamic_select(Company.all.order(:name), :contact_id, 'facility_contact_id', 'facility_company_id') %>
+<% end %>

@@ -1,0 +1,13 @@
+$('#<%= modal_id %>').modal('hide');
+
+<% if object.errors.count > 0 %>
+
+  $('#<%= modal_id %>').on('hidden.bs.modal', function(e){
+    $('body').append('<%= j express_modal("Create New #{object.class.name}", nil, true){ render :partial => "#{object.class.name.pluralize.downcase}/form", :locals => {:remote => true} } %>');
+    $('#<%= modal_id %>').modal('show');
+  });
+<% else %>
+  var opts = document.getElementById('<%= select_id %>').options;
+  opts[opts.length] = new Option('<%= object.send(name_method )%>', '<%= object.send(id_method) %>');
+  $('#<%= select_id %>').val('<%= object.send(id_method) %>');
+<% end %>

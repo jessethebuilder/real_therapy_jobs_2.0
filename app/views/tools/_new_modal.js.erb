@@ -1,0 +1,2 @@
+$('body').append('<%= j express_modal("Create New #{object.class.name}", nil, true){ render :partial => "#{object.class.name.pluralize.downcase}/form", :locals => {:remote => true} } %>');
+$('#<%= modal_id %>').modal('show');
